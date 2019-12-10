@@ -1,0 +1,10 @@
+b-navbar(toggleable="md" type="dark" variant="dark")
+    b-navbar-toggle(target="nav_collapse")
+    b-navbar-brand Генератор паролей
+    b-collapse#nav_collapse(is-nav)
+        b-navbar-nav
+            b-nav-item(to="/passwords") Пароли
+            b-nav-item(to="/notepad") Блокнот
+        b-navbar-nav.ml-auto
+            b-navbar-nav(right)
+                b-nav-item(@click="signout") Выход ({{ user.name }})

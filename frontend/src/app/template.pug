@@ -1,0 +1,9 @@
+div#app(v-show="checkedAuth")
+    nprogress-container
+    span(v-if="auth")
+        app-navbar
+        b-container#app-container(fluid)
+            transition(name="fade" mode="out-in")
+                router-view
+    span(v-else)
+        app-signin

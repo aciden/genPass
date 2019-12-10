@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+
+    <entity
+            name="Generator\Entity\Notepad\NotepadItemPost"
+            table="notepad_item_post"
+            repository-class="Generator\Infrastructure\Persistence\Doctrine\Notepad\DoctrineNotepadItemPostRepository">
+
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY" />
+        </id>
+
+        <field name="name" column="name" type="string" length="100" nullable="false" />
+        <field name="text" column="text" type="text" />
+        <field name="active" column="active" type="boolean" nullable="false">
+            <options>
+                <option name="default">true</option>
+            </options>
+        </field>
+        <field name="date" column="date" type="datetime_immutable" nullable="false">
+            <options>
+                <option name="default">CURRENT_TIMESTAMP</option>
+            </options>
+        </field>
+        <field name="dateUpdated" column="date_upd" type="datetime_immutable" nullable="false" />
+
+        <many-to-one field="notepadItem" target-entity="Generator\Entity\Notepad\NotepadItem">
+            <join-column name="notepad_item_id" referenced-column-name="id" />
+        </many-to-one>
+
+        <indexes>
+            <index name="notepad_item_post_text" columns="text" />
+            <index name="notepad_item_post_name" columns="name" />
+        </indexes>
+
+    </entity>
+
+</doctrine-mapping>

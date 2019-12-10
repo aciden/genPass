@@ -1,0 +1,24 @@
+{
+    "name": "aciden/generator",
+    "description": "generator passwords",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Aciden",
+            "email": "aciden@septempus.ru"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "ext-json": "*",
+        "doctrine/orm": "^2.7",
+        "symfony/dotenv": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": "",
+            "Generator\\": "src/"
+        }
+    }
+}

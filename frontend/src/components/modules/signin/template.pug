@@ -1,0 +1,23 @@
+div#signin
+    b-row(align-h='center')
+        b-col(md='auto')
+            b-card.signin-card(title='ВХОД')
+                form
+                    b-form-group(label-for='signin-login' :class="{ 'form-group--error': $v.userData.login.$error }")
+                        b-form-input#password-login(
+                            type='text'
+                            placeholder='Логин'
+                            @input="errorClear"
+                            :state="!$v.userData.login.$invalid"
+                            v-model.trim="userData.login")
+                        b-form-invalid-feedback Необходимо заполнить логин
+                    b-form-group(label-for='signin-password')
+                        b-form-input#password-password(
+                            type='password'
+                            placeholder='Пароль'
+                            @input="errorClear"
+                            :state="!$v.userData.password.$invalid"
+                            v-model.trim="userData.password")
+                        b-form-invalid-feedback Необходимо заполнить пароль
+                    b-alert(variant='danger' :show="errorSignIn") Не верный логин или пароль
+                    b-btn(type='submit' :disabled="$v.$invalid || errorSignIn" block variant='outline-success' @click="signin") Вход

@@ -1,0 +1,55 @@
+div#passwords
+    b-card(v-show="application.name" :title='"Пароли: " + application.name' border-variant="success")
+        b-card-header
+            b-btn(variant="primary" @click.stop="modalCreatePassword()") Создать
+        b-tabs(card border-variant="success")
+            b-tab(v-if='activePasswords && activePasswords.length' title='Актуальные пароли' active)
+                b-table(hover :fields='activePasswordsTableFields' :items='activePasswords')
+                    template(slot="actions" slot-scope="row")
+                        b-btn.mr-1(size="sm" variant="warning" @click.stop="modalEditPassword(row.item.id)") Обновить
+                        b-btn.mr-1(size="sm" variant="danger" @click.stop="modalConfirmDelete(row.item.id)") Удалить
+            b-tab(v-if='inactivePasswords && inactivePasswords.length' title='Старые пароли')
+                b-table(small hover :fields='inactivePasswordsTableFields' :items='inactivePasswords')
+    b-modal(
+        ref='modalConfirmDeletePassword'
+        no-close-on-esc=true
+        no-close-on-backdrop=true
+        hide-header-close=true
+        title='Внимание'
+        header-bg-variant='danger'
+        header-text-variant='light'
+        ok-title='Да'
+        ok-variant='danger'
+        cancel-title='Отмена'
+        @ok='handleDeletePassword'
+        @cancel='clearDeletePassword'
+    )
+        p.my-4 Пароль будет удален. Вы уверенны?
+    b-modal(
+    ref='modalEditPassword'
+    title='Редактирование пароля'
+    ok-title='Сохранить'
+    ok-variant='success'
+    cancel-title='Закрыть'
+    :ok-disabled="$v.$invalid"
+    @ok='editPassword'
+    no-close-on-backdrop=true
+    no-close-on-esc=true
+    no-enforce-focus=true
+    )
+        form
+            b-form-group(label='Логин приложения' label-for="password-login")
+                b-form-input#password-login(type='text' v-model.trim="passwordLocal.login" :state="!$v.passwordLocal.login.$invalid")
+                b-form-invalid-feedback Необходимо заполнить логин
+            b-form-group(label='Пароль' label-for="password-password")
+                b-input-group
+                    b-form-input#password-password(type='text' v-model.trim="passwordLocal.password" :value="genPassword" :state="!$v.passwordLocal.password.$invalid")
+                    b-form-invalid-feedback Необходимо заполнить пароль
+                    b-input-group-append
+                        b-btn#popover-generate-password(variant="primary") Сгенерировать
+    b-popover(target='popover-generate-password' title='Генерация пароля' placement='top' ref="popoverGeneratePassword")
+        b-input(type='text' v-model="generatePasswordSetting.length")
+        b-group#generate-password-btn-options
+            b-form-checkbox-group(buttons button-variant='outline-secondary' v-model="generatePasswordSetting.selected" name="test" :options="generatePasswordSetting.options")
+        b-btn.mt-3(variant="outline-success" block @click="generatePassword()") Сгенерировать
+

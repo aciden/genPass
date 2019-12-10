@@ -1,0 +1,29 @@
+div#applications
+    b-row
+        b-col.col-sm-2
+            b-btn(block variant='outline-primary' @click="modalEditApplication") Добавить приложение
+            b-input(type='text' v-on:input="searchApplication" placeholder='Поиск...')
+            b-list-group.applications__list
+                b-list-group-item(
+                v-for="(application) in applicationList"
+                :key="application.id"
+                :to="'/passwords/' + application.id"
+                ) {{ application.name }}
+        b-col#spinner
+            router-view
+    b-modal(
+    ref='modalEditApplication'
+    title='Создание приложения'
+    ok-title='Сохранить'
+    ok-variant='success'
+    cancel-title='Закрыть'
+    :ok-disabled="$v.application.name.$invalid"
+    @ok='createApplication'
+    no-close-on-backdrop=true
+    no-close-on-esc=true
+    no-enforce-focus=true
+    )
+        form
+            b-form-group(label='Название приложения' label-for="password-login")
+                b-form-input#form-application-name(type='text' :state="!$v.application.name.$invalid" required v-model.trim="application.name")
+                b-form-invalid-feedback Необходимо заполнить название приложения
