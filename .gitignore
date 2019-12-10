@@ -1,0 +1,25 @@
+# phpstorm project files
+.idea
+
+# netbeans project files
+nbproject
+
+# zend studio for eclipse project files
+.buildpath
+.project
+.settings
+
+.env
+
+/db/
+
+/backend/vendor/
+/backend/vendor
+/backend/runtime/
+/backend/runtime
+
+/frontend/node_modules/
+/frontend/node_modules
+/frontend/public/
+/frontend/public
+/frontend/npm-debug.log
